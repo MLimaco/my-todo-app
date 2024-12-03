@@ -1,33 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import Header from './components/Header'
+import List from './components/List'
+import Pendiente from './components/Pendiente'
+import Footer from './components/Footer'
 import './App.css'
+import { useState } from 'react'
+
+const tareasIniciales = [
+  {
+    id: 1,
+    text: "Tarea 1",
+    done: false,
+  },
+  {
+    id: 2,
+    text: "Tarea 2",
+    done: false,
+  }
+]
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tareaPendiente, setTareaPendiente] = useState(tareasIniciales);
+
+  const agregarTarea = (texto) => {
+    const nuevaTarea = {
+      id: tareaPendiente.length + 1, // Incrementar el id
+      text: texto,
+      done: false,
+    };
+    setTareaPendiente([...tareaPendiente, nuevaTarea]); // Actualizar el estado
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <Pendiente onAgregarTarea={agregarTarea} />
+      <List tareas={tareaPendiente} />
+      <Footer />
     </>
   )
 }
